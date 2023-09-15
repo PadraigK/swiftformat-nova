@@ -1,0 +1,40 @@
+{
+    "identifier": "org.padraig.SwiftFormat",
+    "name": "SwiftFormat",
+    "organization": "Pádraig Ó Cinnéide",
+    "description": "Runs Nick Lockwood's SwiftFormat whenever Swift files are saved.",
+    "version": "1.0",
+    "categories": ["commands"],
+    
+    "main": "main.js",
+    
+    "activationEvents": [
+        "onLanguage:swift"
+    ],
+    
+    "entitlements": {
+        "filesystem": "readonly",
+        "process": true
+    },
+    
+    "commands": {
+        "editor": [
+            {
+                "title": "Format Swift",
+                "command": "swiftformat.runFormatter",
+                "filters": {
+                    "syntaxes": ["swift"]
+                }
+            }
+        ]
+    },
+    
+    "config": [
+        {
+            "key": "swiftformat.foobar",
+            "title": "Foo the bar",
+            "type": "boolean",
+            "default": false
+        }
+    ]
+}
