@@ -4,61 +4,62 @@ exports.activate = function() {
     compositeDisposable.add(nova.workspace.onDidAddTextEditor(watchEditor));
 }
 
-// TODO: Refactor so this can run just when the command is run (without saving)
-function runFormatter(editor) {    
-    const fullRange = new Range(0, editor.document.length)
-    const text = editor.document.getTextInRange(fullRange);
-
-    let process = new Process("swiftformat", {
-        // "args": ["--quiet"],
-        // "env": {},
-        shell: true,
-        "stdin": "pipe"
-    })
-    
-    var lines = [];
-    
-    process.onStdout((data) => {
-        if (data) {
-            lines.push(data);
-        }
-    });
-    
-    var err = [];
-    
-    process.onStderr((data) => {
-        if (data) {
-            err.push(data);
-        }
-    });
-    
+async function swiftFormat(text) {
+  const process = new Process("swiftformat", {
+      "args": ["--quiet"],
+      shell: true,
+      "stdin": "pipe"
+  })
+  
+  let lines = [];
+  
+  process.onStdout((data) => {
+      if (data) {
+          lines.push(data);
+      }
+  });
+  
+  const exitPromise = new Promise((resolve) => {
     process.onDidExit((status) => {
-        var didChange = false
-        editor.edit(
-            (textEditorEdit) => { 
-                var formattedText = lines.join("")
-                if(text!=formattedText) {
-                    didChange = true 
-                    textEditorEdit.replace(fullRange, lines.join(""));
-                }
-            }
-        ).then( () => {
-            if (didChange && !editor.document.isUntitled) {
-                editor.save();
-            }
-        });
-    });
+      resolve(status);
+    });  
+  })
+  
+  process.start();
+  
+  const writer = process.stdin.getWriter();
+  
+  try {
+    await writer.ready;
     
-    compositeDisposable.add(process)
+    console.log("writing: " + text)
+    writer.write(text);
+    writer.close();
+  } catch (e) {
+    console.error("Write to STDIN error:", e)
+    throw e;
+  }
+  
+  const status = await exitPromise;
+  console.log("exit status: " + status)
+  console.log("returning: " + lines.join(""))
+  return lines.join("");
+}
+
+async function formatDocument(editor) {    
+    const fullRange = new Range(0, editor.document.length)
+    const originalText = editor.document.getTextInRange(fullRange);
+
+    const formattedText = await swiftFormat(originalText);
+    const didChange = formattedText!=originalText
     
-    process.start();
+    if (didChange) {
+      await editor.edit((edit) => {
+        edit.replace(fullRange, formattedText);
+      });
+    }
     
-    const writer = process.stdin.getWriter();
-    
-    writer.ready
-      .then(() => defaultWriter.write(text))
-      .then(() => defaultWriter.close())
-      .catch((err) => console.error("Write to STDIN error:", err));
+    return didChange;
 }
 
 function watchEditor(editor) {
@@ -69,73 +70,25 @@ function watchEditor(editor) {
     }
     
     console.log("Observing " + document.uri + "for willSave");
-    const editorDisposable = new CompositeDisposable();
     
-    editorDisposable.add(
-      editor.onWillSave(async (editor) => {
-        // if (shouldFixOnSave()) {
-        //   await linter.fixEditor(editor);
-        // }
-        // linter.lintDocument(editor.document);
-        
-          runFormatter(editor)
-      })
-    );
-    
-    return editorDisposable;
+    return editor.onWillSave(async (editor) => {
+      // if (shouldFixOnSave()) {
+      //   await linter.fixEditor(editor);
+      // }
+      // linter.lintDocument(editor.document);
+      
+        const didChange = await formatDocument(editor);
+        if (didChange && !editor.document.isUntitled) { 
+          await editor.save();
+        }
+    });
 }
 
 exports.deactivate = function() {
     compositeDisposable.dispose();
 }
 
-nova.commands.register("swiftformat.runFormatter", (editor) => {
-    runFormatter(editor)
-});
-
-nova.commands.register("swiftformat.openURL", (workspace) => {
-    var options = {
-        "placeholder": "https://foobar.com",
-        "prompt": "Open"
-    };
-    nova.workspace.showInputPanel("Enter the URL to open:", options, function(result) {
-        if (result) {
-            nova.openURL(result, function(success) {
-                
-            });
-        }
-    });
-});
-
-nova.commands.register("swiftformat.runExternalTool", (workspace) => {
-    var options = {
-        "placeholder": "/path/to/tool",
-        "prompt": "Run"
-    };
-    nova.workspace.showInputPanel("Enter the path to the external tool:", options, function(result) {
-        if (result) {
-            var options = {
-                // "args": [],
-                // "env": {},
-                // "stdin": <any buffer or string>
-            };
-            
-            var process = new Process(result, options);
-            var lines = [];
-            
-            process.onStdout(function(data) {
-                if (data) {
-                    lines.push(data);
-                }
-            });
-            
-            process.onDidExit(function(status) {
-                var string = "External Tool Exited with Stdout:\n" + lines.join("");
-                nova.workspace.showInformativeMessage(string);
-            });
-            
-            process.start();
-        }
-    });
+nova.commands.register("swiftformat.formatDocument", async (editor) => {
+    await formatDocument(editor);
 });
 
