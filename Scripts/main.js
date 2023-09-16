@@ -1,7 +1,14 @@
+nova.commands.register("swiftformat.formatDocument", formatDocument);
+
+
 const compositeDisposable = new CompositeDisposable();
 
 exports.activate = function() {
     compositeDisposable.add(nova.workspace.onDidAddTextEditor(watchEditor));
+}
+
+exports.deactivate = function() {
+    compositeDisposable.dispose();
 }
 
 async function swiftFormat(text) {
@@ -19,29 +26,43 @@ async function swiftFormat(text) {
       }
   });
   
+  let errorLines = [];
+  
+  process.onStderr((data) => {
+      if (data) {
+          errorLines.push(data);
+      }
+  });
+  
   const exitPromise = new Promise((resolve) => {
     process.onDidExit((status) => {
       resolve(status);
     });  
   })
   
-  process.start();
-  
   const writer = process.stdin.getWriter();
   
-  try {
-    await writer.ready;
-    
-    console.log("writing: " + text)
-    writer.write(text);
-    writer.close();
-  } catch (e) {
-    console.error("Write to STDIN error:", e)
-    throw e;
+  process.start();
+  
+  await writer.ready;
+  writer.write(text);
+  writer.close();
+   
+  const status = await exitPromise;
+  
+  switch (status) {
+    case 0: 
+      break;
+    case 70:
+      throw new Error(`Program Error: ${errorLines.join("")}`)
+      break;
+    case 127:
+      throw new Error("Couldn't find the swiftformat executable.");
+      break;
+    default:
+      throw new Error(`${status} - ${errorLines.join("")}`) 
   }
   
-  const status = await exitPromise;
-  console.log("exit status: " + status)
   console.log("returning: " + lines.join(""))
   return lines.join("");
 }
@@ -50,16 +71,26 @@ async function formatDocument(editor) {
     const fullRange = new Range(0, editor.document.length)
     const originalText = editor.document.getTextInRange(fullRange);
 
-    const formattedText = await swiftFormat(originalText);
-    const didChange = formattedText!=originalText
-    
-    if (didChange) {
-      await editor.edit((edit) => {
-        edit.replace(fullRange, formattedText);
-      });
+    try {
+      const formattedText = await swiftFormat(originalText);
+      
+      // Clear previous notification if we tried again and succeeded.
+      nova.notifications.cancel("swiftformat-process-failed");
+      
+      if (formattedText!=originalText) {
+        await editor.edit((edit) => {
+          edit.replace(fullRange, formattedText);
+        });
+      }
+    } catch (e) { 
+        let request = new NotificationRequest("swiftformat-process-failed");
+        
+        request.title = "Error Running SwiftFormat";
+        request.body = e.message;
+        
+        request.actions = [nova.localize("OK")];
+        nova.notifications.add(request);
     }
-    
-    return didChange;
 }
 
 function watchEditor(editor) {
@@ -77,18 +108,7 @@ function watchEditor(editor) {
       // }
       // linter.lintDocument(editor.document);
       
-        const didChange = await formatDocument(editor);
-        if (didChange && !editor.document.isUntitled) { 
-          await editor.save();
-        }
+        await formatDocument(editor);
     });
 }
-
-exports.deactivate = function() {
-    compositeDisposable.dispose();
-}
-
-nova.commands.register("swiftformat.formatDocument", async (editor) => {
-    await formatDocument(editor);
-});
 
