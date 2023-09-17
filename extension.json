@@ -2,9 +2,9 @@
     "identifier": "org.padraig.SwiftFormat",
     "name": "SwiftFormat",
     "organization": "Pádraig Ó Cinnéide",
-    "description": "Runs Nick Lockwood's SwiftFormat whenever Swift files are saved.",
+    "description": "Runs SwiftFormat whenever Swift files are saved.",
     "version": "1.0",
-    "categories": ["commands"],
+    "categories": ["formatters", "commands"],
     
     "main": "main.js",
     
@@ -21,7 +21,7 @@
         "editor": [
             {
                 "title": "Format Swift",
-                "command": "swiftformat.formatDocument",
+                "command": "padraig.swiftformat.formatDocument",
                 "filters": {
                     "syntaxes": ["swift"]
                 }
@@ -31,10 +31,50 @@
     
     "config": [
         {
-            "key": "swiftformat.foobar",
-            "title": "Foo the bar",
+            "key": "padraig.swiftformat.config.formatOnSave",
+            "title": "Run formatter when a Swift document is saved",
             "type": "boolean",
-            "default": false
-        }
+            "default": true
+        },
+        {
+            "key": "padraig.swiftformat.config.swiftVersion",
+            "title": "Swift Version",
+            "description": "The Swift version to be passed to swiftformat. If your project includes a `.swift-version` file, the version in that file will be used instead. If this is not set at all, certain formatter rules will not run.",
+            "type": "string",
+            "default": "",
+        },
+        {
+            "key": "padraig.swiftformat.config.executablePath",
+            "title": "Path",
+            "description": "A full path to a `swiftformat` executable. The extension will use a built-in `swiftformat` if this is left empty.   This setting can be used to ensure that all members of a team use the same particular version.",
+            "type": "path",
+            "placeholder": "swiftformat",
+            "default": null
+        },
+    ],
+    
+    "configWorkspace": [
+        {
+          "key": "padraig.swiftformat.config.formatOnSave",
+          "title": "Format on Save",
+          "type": "enum",
+          "values": [["inherit", "Inherit from Global Settings"], ["disable", "Disable"], [ "enable", "Enable"]],
+          "default": "inherit"
+        },
+        {
+            "key": "padraig.swiftformat.config.swiftVersion",
+            "title": "Swift Version",
+            "description": "The Swift version to be passed to swiftformat. If your project includes a `.swift-version` file, the version set in the file will be used instead.",
+            "type": "string",
+            "placeholder": "5.9"
+        },
+        {
+          "key": "padraig.swiftformat.config.executablePath",
+          "title": "Path",
+          "placeholder": "swiftformat",
+          "description": "A full path to a `swiftformat` executable. The extension will use a built-in `swiftformat` if this is left empty. This setting can be used to ensure that all members of a team use the same particular version.",
+          "type": "path",
+          "default": null
+        },
     ]
 }

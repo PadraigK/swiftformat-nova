@@ -1,72 +1,25 @@
-<!--
-👋 Hello! As Nova users browse the extensions library, a good README can help them understand what your extension does, how it works, and what setup or configuration it may require.
-
-Not every extension will need every item described below. Use your best judgement when deciding which parts to keep to provide the best experience for your new users.
-
-💡 Quick Tip! As you edit this README template, you can preview your changes by selecting **Extensions → Activate Project as Extension**, opening the Extension Library, and selecting "SwiftFormat" in the sidebar.
-
-Let's get started!
--->
-
-<!--
-🎈 Include a brief description of the features your extension provides. For example:
--->
-
-**SwiftFormat** provides integration with **A Helpful Tool**, including the most important feature, something that's really helpful, and _a little-known secret!_
+**SwiftFormat** provides integration with Nick Lockwood's [SwiftFormat](https://github.com/nicklockwood/SwiftFormat). The extension will run the formatter when you save a Swift document. It can alternatively be invoked as an editor command. 
 
 <!--
 🎈 It can also be helpful to include a screenshot or GIF showing your extension in action:
 -->
 
-![](https://nova.app/images/en/dark/editor.png)
+![](./Images/screenshot.png)
 
 ## Requirements
 
-<!--
-🎈 If your extension depends on external processes or tools that users will need to have, it's helpful to list those and provide links to their installers:
--->
-
-SwiftFormat requires some additional tools to be installed on your Mac:
-
-- [Node.js 8.2.0](https://nodejs.org) and NPM 5.2.0 or newer
-
-<!--
-✨ Providing tips, tricks, or other guides for installing or configuring external dependencies can go a long way toward helping your users have a good setup experience:
--->
-
-> To install the current stable version of Node, click the "Recommended for Most Users" button to begin the download. When that completes, double-click the **.pkg** installer to begin installation.
+SwiftFormat includes a built-in version of the formatter. If you would like to use a different version you can customize the extension with a path to your own version in settings. You might want to do this if you work on a team and want to ensure that everyone is using a particular version.
 
 ## Usage
+SwiftFormat runs any time you save a Swift document, automatically reformatting the Swift according to the default SwiftFormat [rules](https://github.com/nicklockwood/SwiftFormat#rules). You can customize these in a `.swiftformat` [config file](https://github.com/nicklockwood/SwiftFormat#config-file) in the root of your project. 
 
-<!--
-🎈 If users will interact with your extension manually, describe those options:
--->
-
-To run SwiftFormat:
+To run SwiftFormat manually:
 
 - Select the **Editor → SwiftFormat** menu item; or
 - Open the command palette and type `SwiftFormat`
 
-<!--
-🎈 Alternatively, if your extension runs automatically (as in the case of a validator), consider showing users what they can expect to see:
--->
-
-SwiftFormat runs any time you open a local project, automatically lints all open files, then reports errors and warnings in Nova's **Issues** sidebar and the editor gutter:
-
-![](https://nova.app/images/en/light/tools/sidebars.png)
-
 ### Configuration
-
-<!--
-🎈 If your extension offers global- or workspace-scoped preferences, consider pointing users toward those settings. For example:
--->
-
-To configure global preferences, open **Extensions → Extension Library...** then select SwiftFormat's **Preferences** tab.
+To configure global preferences, open **Extensions → Extension Library...** then select SwiftFormat's **Settings** tab.
 
 You can also configure preferences on a per-project basis in **Project → Project Settings...**
 
-<!--
-👋 That's it! Happy developing!
-
-P.S. If you'd like, you can remove these comments before submitting your extension 😉
--->
