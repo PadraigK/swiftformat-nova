@@ -1,0 +1,8 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "if gh release --repo https:\/\/github.com\/nicklockwood\/SwiftFormat download -p 'swiftformat.zip'; then\n\tunzip -o -d SwiftFormat.novaextension\/bin swiftformat.zip\n\trm swiftformat.zip\nfi"
+    }
+  }
+}
