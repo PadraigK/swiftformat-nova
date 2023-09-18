@@ -2,4 +2,4 @@
 
 Initial release 🥰
 
-Includes bundled SwiftFormat version: 0.52.3 sd
+* Includes bundled SwiftFormat version: 0.52.3
