@@ -26,7 +26,7 @@ async function swiftFormat(text) {
   
   const process = new Process(executablePath(), {
       "args": args,
-      shell: true,
+      "shell": true,
       "stdin": "pipe"
   })
   
