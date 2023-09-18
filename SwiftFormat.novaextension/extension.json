@@ -1,7 +1,7 @@
 {
     "identifier": "org.padraig.SwiftFormat",
     "name": "SwiftFormat",
-    "organization": "padraig.org",
+    "organization": "Padraig",
     "license": "MIT",
     "description": "Runs SwiftFormat when Swift files are saved.",
     "bugs": "https://github.com/PadraigK/swiftformat-nova/issues",
@@ -44,7 +44,7 @@
             "title": "Swift Version",
             "description": "The Swift version to be passed to swiftformat. If your project includes a `.swift-version` file, the version in that file will be used instead. If this is not set at all, certain formatter rules will not run.",
             "type": "string",
-            "default": "",
+            "default": ""
         },
         {
             "key": "padraig.swiftformat.config.executablePath",
@@ -53,7 +53,7 @@
             "type": "path",
             "placeholder": "swiftformat",
             "default": null
-        },
+        }
     ],
     
     "configWorkspace": [
@@ -78,6 +78,6 @@
           "description": "A full path to a `swiftformat` executable. The extension will use a built-in `swiftformat` if this is left empty. This setting can be used to ensure that all members of a team use the same particular version.",
           "type": "path",
           "default": null
-        },
+        }
     ]
 }

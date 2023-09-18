@@ -1,4 +1,4 @@
-**SwiftFormat** integrates Nick Lockwood's [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) which is a tool for reformatting Swift code with [Nova](https://panic.com/nova).
+**SwiftFormat** integrates Nick Lockwood's [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) with [Nova](https://panic.com/nova).
 
 This extension will run the formatter when a Swift document is saved. It can also be invoked as an editor command. 
 
