@@ -1,8 +1,11 @@
 {
     "identifier": "org.padraig.SwiftFormat",
     "name": "SwiftFormat",
-    "organization": "Pádraig Ó Cinnéide",
-    "description": "Runs SwiftFormat whenever Swift files are saved.",
+    "organization": "padraig.org",
+    "license": "MIT",
+    "description": "Runs SwiftFormat when Swift files are saved.",
+    "bugs": "https://github.com/PadraigK/swiftformat-nova/issues",
+    "repository": "https://github.com/PadraigK/swiftformat-nova",
     "version": "1.0",
     "categories": ["formatters", "commands"],
     
