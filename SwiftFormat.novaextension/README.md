@@ -1,17 +1,17 @@
-**SwiftFormat** provides integration with Nick Lockwood's [SwiftFormat](https://github.com/nicklockwood/SwiftFormat). The extension will run the formatter when you save a Swift document. It can alternatively be invoked as an editor command. 
+**SwiftFormat** provides integration with Nick Lockwood's [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) which is a tool for reformatting Swift code. 
 
-<!--
-🎈 It can also be helpful to include a screenshot or GIF showing your extension in action:
--->
+This extension will run the formatter when a Swift document is saved. It can also be invoked as an editor command. 
 
-![](./Images/screenshot.png)
+![](https://raw.githubusercontent.com/PadraigK/swiftformat-nova/main/Images/screenshot.png)
 
 ## Requirements
 
-SwiftFormat includes a built-in version of the formatter. If you would like to use a different version you can customize the extension with a path to your own version in settings. You might want to do this if you work on a team and want to ensure that everyone is using a particular version.
+The SwiftFormat extension includes a built-in version of the actual formatter tool, so no additional setup is required. 
+
+If you would like to use a different version, you can set a path to a custom binary in settings. You might do this if you work on a team and want to ensure that everyone is using a particular version.
 
 ## Usage
-SwiftFormat runs any time you save a Swift document, automatically reformatting the Swift according to the default SwiftFormat [rules](https://github.com/nicklockwood/SwiftFormat#rules). You can customize these in a `.swiftformat` [config file](https://github.com/nicklockwood/SwiftFormat#config-file) in the root of your project. 
+SwiftFormat runs any time a Swift document is saved in Nova, automatically reformatting code according to the default SwiftFormat [rules](https://github.com/nicklockwood/SwiftFormat#rules). You can customize the rules by creating a `.swiftformat` [config file](https://github.com/nicklockwood/SwiftFormat#config-file) in the root of your project. 
 
 To run SwiftFormat manually:
 
@@ -19,7 +19,7 @@ To run SwiftFormat manually:
 - Open the command palette and type `SwiftFormat`
 
 ### Configuration
-To configure global preferences, open **Extensions → Extension Library...** then select SwiftFormat's **Settings** tab.
+To configure global settings, open **Extensions → Extension Library...** then select SwiftFormat's **Settings** tab.
 
-You can also configure preferences on a per-project basis in **Project → Project Settings...**
+You can also configure settings on a per-project basis in **Project → Project Settings...**
 
