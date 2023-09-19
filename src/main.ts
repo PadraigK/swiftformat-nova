@@ -183,6 +183,8 @@ function swiftVersion(): string | null {
 		if (isTextMode(file)) {
 			return file.readline()		
 		}
+		
+		file.close()
 	}
   }
   

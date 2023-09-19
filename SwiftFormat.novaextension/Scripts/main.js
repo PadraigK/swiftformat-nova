@@ -144,6 +144,7 @@ function swiftVersion() {
             if (isTextMode(file)) {
                 return file.readline();
             }
+            file.close();
         }
     }
     const configKey = "padraig.swiftformat.config.swiftVersion";

@@ -68,8 +68,7 @@
             "key": "padraig.swiftformat.config.swiftVersion",
             "title": "Swift Version",
             "description": "The Swift version to be passed to swiftformat. If your project includes a `.swift-version` file, the version set in the file will be used instead.",
-            "type": "string",
-            "placeholder": "5.9"
+            "type": "string"
         },
         {
           "key": "padraig.swiftformat.config.executablePath",
