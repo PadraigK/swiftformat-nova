@@ -181,7 +181,7 @@ function swiftVersion(): string | null {
 		const file = nova.fs.open(swiftVersionPath, 'r');
 	
 		if (isTextMode(file)) {
-			return file.readline()		
+			return file.readline().trim()
 		}
 		
 		file.close()

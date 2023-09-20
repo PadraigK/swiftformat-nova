@@ -142,7 +142,7 @@ function swiftVersion() {
         if (nova.fs.stat(swiftVersionPath)) {
             const file = nova.fs.open(swiftVersionPath, 'r');
             if (isTextMode(file)) {
-                return file.readline();
+                return file.readline().trim();
             }
             file.close();
         }
