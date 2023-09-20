@@ -6,7 +6,7 @@
     "description": "Runs SwiftFormat when Swift files are saved.",
     "bugs": "https://github.com/PadraigK/swiftformat-nova/issues",
     "repository": "https://github.com/PadraigK/swiftformat-nova",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "categories": ["formatters", "commands"],
     
     "main": "main.js",
