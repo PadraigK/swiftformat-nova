@@ -1,0 +1,14 @@
+{
+  "actions": {
+    "build": {
+      "enabled": true,
+      "script": "NO_UPDATE_NOTIFIER=true yarn build"
+    },
+    "run": {
+      "enabled": true,
+      "script": "NO_UPDATE_NOTIFIER=true yarn watch"
+    }
+  },
+  "openLogOnRun": "start",
+  "persistent": true
+}
