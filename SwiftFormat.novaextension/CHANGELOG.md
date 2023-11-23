@@ -1,3 +1,7 @@
+## Version 1.0.3
+
+* Bumped the bundled SwiftFormat version to 0.52.10
+
 ## Version 1.0.2
 
 * Fixes an issue where the formatter would error if there was a newline in `.swift-version`. Thanks for reporting @hisaac!
