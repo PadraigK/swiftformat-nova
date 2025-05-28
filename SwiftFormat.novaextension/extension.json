@@ -6,7 +6,7 @@
     "description": "Runs SwiftFormat when Swift files are saved.",
     "bugs": "https://github.com/PadraigK/swiftformat-nova/issues",
     "repository": "https://github.com/PadraigK/swiftformat-nova",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "categories": ["formatters", "commands"],
     
     "main": "main.js",
@@ -74,7 +74,7 @@
           "key": "padraig.swiftformat.config.executablePath",
           "title": "Path",
           "placeholder": "swiftformat",
-          "description": "A full path to a `swiftformat` executable. The extension will use a built-in `swiftformat` if this is left empty. This setting can be used to ensure that all members of a team use the same particular version.",
+          "description": "Either a full or project relative path to a `swiftformat` executable . The extension will use a built-in `swiftformat` if this is left empty. This setting can be used to ensure that all members of a team use the same particular version.",
           "type": "path",
           "default": null
         }

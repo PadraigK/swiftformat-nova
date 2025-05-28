@@ -1,3 +1,8 @@
+## Version 1.0.4
+
+* Bumped the bundled SwiftFormat version to 0.56.2
+* Adds support for relative paths to a swiftformat binary in the project workspace
+
 ## Version 1.0.3
 
 * Bumped the bundled SwiftFormat version to 0.52.10

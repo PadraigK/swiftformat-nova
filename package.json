@@ -35,5 +35,8 @@
   },
   "resolutions": {
     "tslib": "^2.6.2"
+  },
+  "dependencies": {
+    "yarn": "^1.22.22"
   }
 }

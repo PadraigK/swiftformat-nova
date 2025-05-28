@@ -137,20 +137,26 @@ function shouldFormatOnSave(): boolean {
 }
 
 function customExecutablePath(): string | null { 
-  const configKey = "padraig.swiftformat.config.executablePath"
-  const workspacePath = nova.workspace.config.get(configKey, "string");
-  
-  if (workspacePath) {
-	return workspacePath;
-  }
-  
-  const globalPath = nova.config.get(configKey, "string");
-  
-  if (globalPath) {
-	return globalPath;
-  }
-  
-  return null
+	const configKey = "padraig.swiftformat.config.executablePath"
+	const workspacePath = nova.workspace.config.get(configKey, "string");
+	
+	if (workspacePath) {
+		// If the path does not start with "/" (not absolute), treat as project-relative
+		if (!workspacePath.startsWith("/")) {
+			if (nova.workspace.path) {
+				return nova.path.join(nova.workspace.path, workspacePath);
+			}
+		}
+		return workspacePath;
+	}
+	
+	const globalPath = nova.config.get(configKey, "string");
+	
+	if (globalPath) {
+		return globalPath;
+	}
+	
+	return null;
 }
 
 function executablePath(): string { 
